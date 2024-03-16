@@ -30,11 +30,11 @@ class RaffleContract {
             const option = { gasLimit: 500000 };
             console.log(`price: ${price}`);
             console.log('prizeNFTContract: ', prizeNFTContract);
-            const collectionContract = new CollectionContract(prizeNFTContract);
 
-            // TODO: BRIDGE USING XP NETWORK
-            const approveResult = await collectionContract.approve(prizeNFTTokenId);
-            console.log('approved: ', approveResult);
+            // @dev If the Raffle Contract isn't already the owner 
+            // const collectionContract = new CollectionContract(prizeNFTContract);
+            // const approveResult = await collectionContract.approve(prizeNFTTokenId);
+            // console.log('approved: ', approveResult);
 
             const transaction = await this.raffleContract.startRaffle(price, doopPrice, payableWithDoop, duration, prizeNFTContract, prizeNFTContract_L2, prizeNFTTokenId, prizeNFTTokenId_L2, option);
             return await transaction.wait();
