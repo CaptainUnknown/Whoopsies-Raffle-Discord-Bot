@@ -47,12 +47,6 @@ module.exports = {
                 .setName('tokenid')
                 .setDescription("Prize NFT Token Id.")
                 .setRequired(true)
-        )
-        .addStringOption((option) =>
-            option
-                .setName('l2tokenid')
-                .setDescription("Wrapped NFT Token Id on Nova.")
-                .setRequired(true)
         ),
     async execute(interaction, client) {
         await interaction.deferReply();
@@ -69,7 +63,6 @@ module.exports = {
         const prizeContract = interaction.options.getString("contract");
         const prizeContract_L2 = interaction.options.getString("l2contract");
         const prizeTokenId = interaction.options.getString("tokenid");
-        const prizeTokenId_L2 = interaction.options.getString("l2tokenid");
         // Days in seconds + 10-min padded delay
         const delay = ((duration * 24 * 60 * 60) + (60 * 10)) * 1000;
         let raffleIDs = [];
@@ -111,7 +104,7 @@ module.exports = {
             // address _prizeNFTContract_bridged
             // uint32 _prizeNFTTokenId_mainnet
             // uint32 _prizeNFTTokenId_bridged
-            const result = await contract.startRaffle(price, doopPrice, payableWithDoop, duration, prizeContract, prizeContract_L2, prizeTokenId, prizeTokenId_L2);
+            const result = await contract.startRaffle(price, doopPrice, payableWithDoop, duration, prizeContract, prizeContract_L2, prizeTokenId, prizeTokenId);
             raffleIDs = await contract.getRaffleIDs();
             console.log(result);
             console.log(raffleIDs[raffleIDs.length - 1]);
